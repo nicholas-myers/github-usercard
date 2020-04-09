@@ -77,8 +77,11 @@
 
   return userCard;
 }; //close userCardMaker
-// console.log(me)
-// console.log(userCardMaker(me))
+
+
+/* Step 4: Pass the data received from Github into your function, 
+           create a new component and add it to the DOM as a child of .cards
+*/
 const cards = document.querySelector(".cards")
 axios.get("https://api.github.com/users/nicholas-myers")
   .then(myData => {
@@ -87,9 +90,7 @@ axios.get("https://api.github.com/users/nicholas-myers")
   .catch(error => {
     console.log(error)
   })
-/* Step 4: Pass the data received from Github into your function, 
-           create a new component and add it to the DOM as a child of .cards
-*/
+
 
 
 
@@ -104,8 +105,17 @@ axios.get("https://api.github.com/users/nicholas-myers")
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
+axios.get("https://api.github.com/users/nicholas-myers/followers")
+.then(followersArray => {
+  
+  followersArray.data.forEach(follower => {
+    cards.appendChild(userCardMaker(follower))
+  })
+})
+.catch(error => {
+  console.log(error)
+})
 
-const followersArray = [];
 
 /* List of LS Instructors Github username's: 
   tetondan
