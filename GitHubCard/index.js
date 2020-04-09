@@ -2,18 +2,11 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-let me = {
+// let me = {
 
-} 
+// } 
 
-axios.get("https://api.github.com/users/nicholas-myers")
-  .then(userData => {
-    me = userData.data
-    
-  })
-  .catch(error => {
-    console.log(error)
-  })
+
   /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -68,12 +61,12 @@ axios.get("https://api.github.com/users/nicholas-myers")
   userCard.classList.add("card")
   userImage.src = avatar_url
   cardInfo.classList.add("card-info")
-  name.classList.add("name")
+  personName.classList.add("name")
   userName.classList.add("username")
   userProfileLink.href = html_url
 
   //set content
-  name.textContent = name
+  personName.textContent = name
   userName.textContent = `User Name: ${login}`
   userLocation.textContent = location
   userProfileLink.textContent = html_url
@@ -84,16 +77,23 @@ axios.get("https://api.github.com/users/nicholas-myers")
 
   return userCard;
 }; //close userCardMaker
-
-
-
+// console.log(me)
+// console.log(userCardMaker(me))
+const cards = document.querySelector(".cards")
+axios.get("https://api.github.com/users/nicholas-myers")
+  .then(myData => {
+    cards.appendChild(userCardMaker(myData.data))
+  })
+  .catch(error => {
+    console.log(error)
+  })
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
 
-const cards = document.querySelector(".cards")
 
-// cards.appendChild(userCardMaker(me))
+
+
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
