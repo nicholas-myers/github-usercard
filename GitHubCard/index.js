@@ -41,7 +41,7 @@
   const userLocation = document.createElement("p")
   const userProfile = document.createElement("p")
   const userProfileLink = document.createElement("a")
-  const userFollowers = document.createElement("p")
+  const userFollowers = document.createElement("button")
   const userFollowing = document.createElement("p")
   const userBio = document.createElement("p")
 
@@ -74,6 +74,26 @@
   userFollowing.textContent = `Following: ${following}`
   userBio.textContent = `Bio: ${bio}`
 
+  userFollowers.addEventListener("click", (event) => {
+    axios.get("https://api.github.com/users/nicholas-myers/followers")
+      .then(followersArray => {
+        followersArray.data.forEach(item => {
+          const followerURL = item.url
+          axios.get(followerURL)
+            .then(response => {
+              cards.appendChild(userCardMaker(response.data))
+            })
+            .catch(error => {
+              console.log(error)
+            })
+
+        
+        })
+      })
+      .catch(error => {
+        console.log(error)
+    })
+  })
 
   return userCard;
 }; //close userCardMaker
@@ -87,25 +107,20 @@ axios.get("https://api.github.com/users/nicholas-myers")
   .then(myData => {
     cards.appendChild(userCardMaker(myData.data))
   })
-  .then(
-    axios.get("https://api.github.com/users/nicholas-myers/followers")
-      .then(followersArray => {
-        followersArray.data.forEach(follower => {
-        cards.appendChild(userCardMaker(follower))
-        })
-      })
-      .catch(error => {
-        console.log(error)
-    })
-  )
+  // .then(
+  //   axios.get("https://api.github.com/users/nicholas-myers/followers")
+  //     .then(followersArray => {
+  //       followersArray.data.forEach(follower => {
+  //       cards.appendChild(userCardMaker(follower))
+  //       })
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //   })
+  // )
   .catch(error => {
     console.log(error)
   })
-
-
-
-
-
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
