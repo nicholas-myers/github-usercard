@@ -87,6 +87,17 @@ axios.get("https://api.github.com/users/nicholas-myers")
   .then(myData => {
     cards.appendChild(userCardMaker(myData.data))
   })
+  .then(
+    axios.get("https://api.github.com/users/nicholas-myers/followers")
+      .then(followersArray => {
+        followersArray.data.forEach(follower => {
+        cards.appendChild(userCardMaker(follower))
+        })
+      })
+      .catch(error => {
+        console.log(error)
+    })
+  )
   .catch(error => {
     console.log(error)
   })
@@ -105,16 +116,15 @@ axios.get("https://api.github.com/users/nicholas-myers")
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
-axios.get("https://api.github.com/users/nicholas-myers/followers")
-.then(followersArray => {
-  
-  followersArray.data.forEach(follower => {
-    cards.appendChild(userCardMaker(follower))
-  })
-})
-.catch(error => {
-  console.log(error)
-})
+// axios.get("https://api.github.com/users/nicholas-myers/followers")
+// .then(followersArray => {
+//   followersArray.data.forEach(follower => {
+//     cards.appendChild(userCardMaker(follower))
+//   })
+// })
+// .catch(error => {
+//   console.log(error)
+// })
 
 
 /* List of LS Instructors Github username's: 
